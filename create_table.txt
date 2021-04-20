@@ -1,0 +1,21 @@
+CREATE TABLE "Games" (
+	"Id"	INTEGER NOT NULL UNIQUE,
+	"GameName"	TEXT NOT NULL,
+	"LaunchDate"	TEXT,
+	"Platform"	TEXT,
+	"MetaScore"	REAL,
+	"UserScore"	REAL,
+	"Developer"	TEXT,
+	"NumOfPlayers"	INTEGER,
+	"Ratings"	TEXT,
+	"CriticTotal"	INTEGER,
+	"CriticPositive"	REAL,
+	"UserTotal"	INTEGER,
+	"UserPositive"	REAL,
+	PRIMARY KEY("Id" AUTOINCREMENT)
+)
+
+CREATE TABLE "Genres" (
+	"GameId"	INTEGER NOT NULL,
+	"Genre"	TEXT NOT NULL
+)

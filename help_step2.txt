@@ -1,0 +1,5 @@
+Commands
+- add <platform_name>
+    -- fetch data for a platform
+- delete
+    -- delete the current database
