@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF8"/>
+    <title>Meta Critic Developer Home</title>
+</head>
+<body>
+    <h1>Welcome to the Developer Browser!</h1>
+    <form action='/results/companies' method='POST'>
+        <p>
+            Filter by:
+            <select name="platform" id="platform">
+                <option value="none">Select platform:</option>
+                <option value="ps4">PlayStation 4</option>
+                <option value="ps5">PlayStation 5</option>
+                <option value="switch">Switch</option>
+                <option value="xboxone">Xbox One</option>
+                <option value="xbox-series-x">Xbox Series X</option>
+            </select>
+        </p>
+
+        <p>
+            Launch date range<br>
+            <label for="start_date">Start date :</label>
+            <input type="date" id="start_date" name="start_date" value="2013-01-01" min="2013-01-01" max="2021-04-30"><br>
+            <label for="end_date">End date   :</label>
+            <input type="date" id="end_date" name="end_date" value="2021-04-29" min="2013-01-01" max="2021-04-30"><br>
+        </p>
+
+        <p>
+            Game mode: <br>
+            <input type='radio' name='mode' value='none' checked='checked'/> Not Specified<br>
+            <input type='radio' name='mode' value='online'/> Online Game <br>
+            <input type='radio' name='mode' value='offline'/> Single Player <br>
+        </p>
+
+        <p>
+            Age Groups: <br>
+            <input type='checkbox' name='ratings' value='E'/> E  <br>
+            <input type='checkbox' name='ratings' value='E10+'/> E10+  <br>
+            <input type='checkbox' name='ratings' value='T'/> T  <br>
+            <input type='checkbox' name='ratings' value='M'/> M  <br>
+        </p>
+
+        <p>
+            Least number of games published:
+            <input type="text" id="record" name="record" value="5"><br>
+        </p>
+
+        <p>
+            Sort by: <br>
+            <input type='radio' name='sortby' value='meta' checked='checked'/> Average MetaScore<br>
+            <input type='radio' name='sortby' value='user'/> Average UserScore <br>
+            <input type='radio' name='sortby' value='count'/> Game Count <br>
+        </p>
+
+        <p>
+            Sorting Order: <br>
+            <input type='radio' name='order' value='top' checked='checked'/> Descending<br>
+            <input type='radio' name='order' value='bottom'/> Ascending <br>
+        </p>
+
+        <p>
+             Results to show:
+            <input type="text" id="limit" name="limit" value="10"><br>
+        </p>
+
+        <p>
+            Show bar chart: <br>
+            <input type='radio' name='plots' value='bar' /> True<br>
+            <input type='radio' name='plots' value='table' checked='checked'/> False<br>
+        </p>
+
+        <input type='submit' value='Get Games'/>
+    </form>
+</body>
+</html>

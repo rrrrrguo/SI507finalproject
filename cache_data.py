@@ -132,8 +132,7 @@ def get_game_detail_info(game_page_context):
             num_of_players = 0
         else:
             num_of_players = num_of_players.split(' ')[-1]
-            if num_of_players.isdigit():
-                num_of_players = int(num_of_players)
+            num_of_players = int(num_of_players)
     except:
         num_of_players = None
     try:
@@ -238,7 +237,5 @@ def cache_result_by_platform(platform,cache_path,db_path):
 
 
 
-if __name__ == '__main__':
 
-    cache_result_by_platform('switch',"cache/cache.json")
 

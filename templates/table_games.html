@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF8"/>
+    <title>Game Query Results</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Here are your results!</h1>
+    <table>
+        <tr>
+            <th>GameName</th>
+            <th>Platform</th>
+            <th>MetaScore</th>
+            <th>UserScore</th>
+            <th>Developer</th>
+            <th>NumOfOnlinePlayers</th>
+            <th>Ratings</th>
+            <th>Genres</th>
+            <th>LaunchDate</th>
+        </tr>
+        {% for row in results %}
+        <tr>
+            <td>{{row[0]}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td>{{row[4]}}</td>
+            <td>{{row[5]}}</td>
+            <td>{{row[6]}}</td>
+            <td>{{row[7]}}</td>
+            <td>{{row[8]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% if add_plot == true %}
+        <h1>Here is your plot!</h1>
+        {{plot_div|safe}}
+    {% endif %}
+    <p><a href='/'>Go back to index page</a></p>
+    <p><a href='/companies'>Go back to developer query</a></p>
+</body>
+</html>
