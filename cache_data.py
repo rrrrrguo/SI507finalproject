@@ -4,7 +4,6 @@ import json
 from bs4 import BeautifulSoup
 import re
 import datetime
-import pandas as pd
 from tqdm import tqdm
 from database_utils import write_to_data_base, create_tables,query_db
 import os
