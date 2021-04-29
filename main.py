@@ -17,6 +17,19 @@ ABBR2PLATFORM = {
 
 
 def check_database(path):
+    ''' Check the database
+    Parameters
+    ----------
+    path: str
+        path of the database
+
+    Returns
+    -------
+    cached_platforms: list
+        cached platform in this database
+    game_count: list
+        game count in each cached platform
+    '''
     if not os.path.isfile(path):
         print("Database not found")
         return [], []
@@ -28,9 +41,16 @@ def check_database(path):
 
 def load_help_text(path):
     '''Load help text
+
+    Parameters
+    ----------
+    path: str
+        path to help text
+
     Returns
     -------
-    str, help text
+    str
+        help text
     '''
     with open(path) as f:
         return f.read()
@@ -109,7 +129,11 @@ if __name__ == '__main__':
             elif response == 'flask':
                 app.run(debug=False)
             else:
-                args = parser.parse_args(response.split(' '))
+                try:
+                    args = parser.parse_args(response.split(' '))
+                except:
+                    print("invalid input detected please retry")
+                    continue
                 if parser.error_message:
                     print(parser.error_message)
                     parser.error_message = ''
@@ -128,3 +152,4 @@ if __name__ == '__main__':
                             print_results(result, args)
                         else:
                             print("No records found")
+    print("Bye!")

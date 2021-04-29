@@ -82,6 +82,20 @@ def make_url_request_using_cache(url, cache):
 
 
 def get_games_single_page(page_context):
+    '''Get listed games from a html page
+
+    Parameters
+    ----------
+    page_context: str
+        html content of the game page
+
+    Returns
+    -------
+    game_list: list
+        list of game on that page
+    game_urls: list
+        urls to detail of games
+    '''
     soup = BeautifulSoup(page_context, 'html.parser')
     titles = soup.find_all('td', class_='clamp-summary-wrap')
     game_list = []
@@ -110,6 +124,20 @@ def get_games_single_page(page_context):
 
 
 def get_game_detail_info(game_page_context):
+    '''Get detail game record on a game page
+
+    Parameters
+    ----------
+    game_page_context: str
+        html of that game page
+
+    Returns
+    -------
+    attributes: list
+        list of attributes of the game
+    developers: dict
+        dict of developer names and their url
+    '''
     soup = BeautifulSoup(game_page_context, 'html.parser')
     try:
         developer = soup.find('li', class_="summary_detail developer").find("span", class_='data')
@@ -164,6 +192,22 @@ def get_game_detail_info(game_page_context):
 
 
 def get_game_infos_by_platform(url, cache):
+    '''Get the game infos on a platform
+
+    Parameters
+    ----------
+    url: str
+        url to the platform page
+    cache: dict
+        cache file
+
+    Returns
+    -------
+    all_games: list
+        all the games and info on that platform
+    all_developers: list
+        all relevant developers on that platform
+    '''
     first_page = make_url_request_using_cache(url, cache)
     soup = BeautifulSoup(first_page, 'html.parser')
     last_page = soup.find('li', class_="page last_page")
@@ -190,6 +234,18 @@ def get_game_infos_by_platform(url, cache):
 
 
 def get_existing_companies(db_path):
+    '''Get existed companies in the database
+
+    Parameters
+    ----------
+    db_path: str
+        path to the database
+    Returns
+    -------
+    developers: dict
+        dict of developer names and id
+
+    '''
     if not os.path.isfile(db_path):
         return {}
     try:
@@ -200,6 +256,20 @@ def get_existing_companies(db_path):
     return developers
 
 def get_info_companies(developers,cache):
+    '''Get company info
+
+    Parameters
+    ----------
+    developers: list
+        develop names and their urls
+    cache: dict
+        cache file
+
+    Returns
+    -------
+    result: list
+        fetched results
+    '''
     result=[]
     for dev,url in tqdm(developers):
         try:
@@ -214,6 +284,21 @@ def get_info_companies(developers,cache):
     return result
 
 def cache_result_by_platform(platform,cache_path,db_path):
+    '''Cach result by platform
+
+    Parameters
+    ----------
+    platform: str
+        platform name
+    cache_path: str
+        path to the cache file
+    db_path:
+        path to the database file
+
+    Returns
+    -------
+    None
+    '''
     cache=load_cache(cache_path)
     url=BASE_URL.format(platform)
     print("Fetching data for games")

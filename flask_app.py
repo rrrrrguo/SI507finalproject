@@ -6,6 +6,18 @@ app = Flask(__name__)
 DB_PATH='cache/db.sqlite'
 
 def form_to_argument(form):
+    '''Conver the form to argument for query
+
+    Parameters
+    ----------
+    form: request.Form
+        form get from POST
+
+    Returns
+    -------
+    argument: str
+        argument used for lateral query
+    '''
     argument = ''
     platform = form['platform']
     argument += f"-p {platform} "

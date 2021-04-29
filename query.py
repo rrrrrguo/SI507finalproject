@@ -17,7 +17,10 @@ TARGET2FIELD={
 }
 
 class MyArgumentParser(argparse.ArgumentParser):
-    #https://stackoverflow.com/questions/5943249/python-argparse-and-controlling-overriding-the-exit-status-code
+    '''
+        A wraper for argparser, will not exit the program if error detected in arugment
+        from https://stackoverflow.com/questions/5943249/python-argparse-and-controlling-overriding-the-exit-status-code
+    '''
     def __init__(self, *args, **kwargs):
         super(MyArgumentParser, self).__init__(*args, **kwargs)
 
@@ -37,6 +40,13 @@ class MyArgumentParser(argparse.ArgumentParser):
 
 
 def get_argparser():
+    '''Construct a Argument Parser
+
+    Returns
+    -------
+    parser:
+        argument parser
+    '''
     parser = MyArgumentParser()
     parser.add_argument('--target','-t',type=str,
                         help='The target to list, games or companies')
@@ -67,11 +77,14 @@ def query_db(query,db_path):
 
     Parameters
     ----------
-    query: str, the query SQL
-    db_path: str, the path to database
+    query: str
+        the query SQL
+    db_path: str
+        the path to database
     Returns
     -------
-    result: list[tuple], the returned query result
+    result: list[tuple]
+        the returned query result
     '''
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
@@ -80,6 +93,22 @@ def query_db(query,db_path):
 
 
 def process_query_games(args,db_path):
+    '''Process the query for games
+
+    Parameters
+    ----------
+    args:
+        parsed argument
+    db_path:
+        path to the database
+
+    Returns
+    -------
+    result:
+        A list of query result
+    error_message:
+        error message, if is empty, the query is successful
+    '''
     if args.platform=='none':
         platform_filter=''
     elif args.platform in ABBR2PLATFORM:
@@ -164,6 +193,22 @@ def process_query_games(args,db_path):
 
 
 def process_query_companies(args,db_path):
+    '''Process the query for companies
+
+    Parameters
+    ----------
+    args:
+        parsed argument
+    db_path:
+        path to the database
+
+    Returns
+    -------
+    result:
+        A list of query result
+    error_message:
+        error message, if is empty, the query is successful
+    '''
     if args.platform=='none':
         platform_filter=''
     elif args.platform in ABBR2PLATFORM:
@@ -253,6 +298,23 @@ def process_query_companies(args,db_path):
     return query_db(query,db_path),""
 
 def draw_line_chart(args,data_base_path,return_html=False):
+    '''Draw the line chart according to the argument
+
+    Parameters
+    ----------
+    args:
+        parsed argument
+    data_base_path:
+        path to the database
+    return_html:
+        if true, will return the html of the graph, if false, will display the graph
+    Returns
+    -------
+    html:
+        html of the plot, used for flask
+    error_message:
+        error message, if is empty, the query is successful
+    '''
     if args.platform=='none':
         platform_filter=''
     elif args.platform in ABBR2PLATFORM:
@@ -330,20 +392,67 @@ def draw_line_chart(args,data_base_path,return_html=False):
 
 
 def process_query(args,db_path):
+    '''Process the query for companies
+
+    Parameters
+    ----------
+    args:
+        parsed argument
+    db_path:
+        path to the database
+
+    Returns
+    -------
+    result:
+        A list of query result
+    error_message:
+        error message, if is empty, the query is successful
+    '''
     if args.target=='games':
         return process_query_games(args,db_path)
     elif args.target=='companies':
         return process_query_companies(args,db_path)
     else:
-        return None,f"invalid arguments: -t {args.target}"
+        return [],f"invalid arguments: -t {args.target}"
 
 def print_results(results,args):
+    '''Pretty print query result
+
+    Parameters
+    ----------
+    results:
+        A list of query result
+    args:
+        parsed argument
+
+    Returns
+    -------
+    None
+    '''
     table=PrettyTable(field_names=TARGET2FIELD[args.target])
     table.add_rows(results)
     table.float_format='.1'
     print(table)
 
 def draw_bar_chart(query_result,args,return_html=False):
+    '''Draw the bar chart for query result
+
+    Parameters
+    ----------
+    query_result:
+        A list of query result
+    args:
+        parsed argument
+    return_html:
+        if true, will return the html of the graph, if false, will display the graph
+
+    Returns
+    -------
+    html:
+        html of the plot, used for flask
+    error_message:
+        error message, if is empty, the query is successful
+    '''
     sort_key=args.sortby
     if args.target=='games':
         if sort_key=='user':

@@ -2,6 +2,17 @@ import sqlite3
 
 
 def create_tables(filename):
+    '''Create table in the database
+
+    Parameters
+    ----------
+    filename: str
+        File name of the database
+
+    Returns
+    -------
+    None
+    '''
     connection = sqlite3.connect(filename)
     cur = connection.cursor()
     create_games_table = '''
@@ -58,6 +69,23 @@ def create_tables(filename):
 
 
 def write_to_data_base(company_infos, game_infos,company2id,filename):
+    '''Write records to the database
+
+    Parameters
+    ----------
+    company_infos: list
+        list of company info
+    game_infos: list
+        list of game info
+    company2id: dict
+        new company to save and their ids
+    filename: str
+        path to the database
+
+    Returns
+    -------
+    None
+    '''
     connection = sqlite3.connect(filename)
     cur = connection.cursor()
     #write company record
@@ -102,11 +130,14 @@ def query_db(query,file_name):
 
     Parameters
     ----------
-    query: str, the query SQL
-    file_name: str, database filename
+    query: str
+        the query SQL
+    file_name: str
+        database filename
     Returns
     -------
-    result: list[tuple], the returned query result
+    result: list[tuple]
+        the returned query result
     '''
     connection = sqlite3.connect(file_name)
     cursor = connection.cursor()
